@@ -1,5 +1,8 @@
 const plugin = {
-    name: 'buienradar-paraplu'
+    name: 'buienradar-paraplu',
+    setup: {
+        create: launchPlugin
+    },
 };
 
 let head = document.getElementsByTagName('head')[0];
@@ -13,16 +16,16 @@ function launchPlugin() {
 
     console.log('mounting plugin', plugin.name);
 
-    let element = $("#plugin-buienradar-paraplu");
+    const element = $("#plugin-buienradar-paraplu");
 
     $.getJSON("https://data.buienradar.nl/2.0/feed/json", function (data) {
-        let norain = '😎';
-        let rain = '☔';
+        const norain = '😎';
+        const rain = '☔';
 
-        let indicator = (data.forecast.fivedayforecast[0].mmRainMax > 5) ? rain : norain;
+        const indicator = (data.forecast.fivedayforecast[0].mmRainMax > 5) ? rain : norain;
 
         element.append("<h1>Morgen: " + indicator + "</h1>");
     });
 }
 
-window.registerPlugin({ plugin }, launchPlugin);
+window.registerPlugin({ plugin });
